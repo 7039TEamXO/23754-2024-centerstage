@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.drivetrain;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -15,70 +17,68 @@ import org.firstinspires.ftc.teamcode.util.Vector;
 
 
 public class Drivetrain {
-
-    public static final DcMotor[] motors = new DcMotor[4];
-
+    private  static DcMotor frontLeftMotor;
+    private  static DcMotor backLeftMotor;
+    private  static DcMotor frontRightMotor;
+    private  static DcMotor backRightMotor;
+    private  static  IMU imu;
     public static void init(HardwareMap hardwareMap) {
-        motors[0] = hardwareMap.get(DcMotor.class, "lf");
-        motors[1] = hardwareMap.get(DcMotor.class, "rf");
-        motors[2] = hardwareMap.get(DcMotor.class, "lb");
-        motors[3] = hardwareMap.get(DcMotor.class, "rb");
+         frontLeftMotor = hardwareMap.dcMotor.get("lf");
+         backLeftMotor = hardwareMap.dcMotor.get("lb");
+         frontRightMotor = hardwareMap.dcMotor.get("rf");
+         backRightMotor = hardwareMap.dcMotor.get("rb");
 
-        motors[0].setDirection(DcMotorSimple.Direction.REVERSE);
-        motors[2].setDirection(DcMotorSimple.Direction.REVERSE);
+        // Reverse the right side motors. This may be wrong for your setup.
+        // If your robot moves backwards when commanded to go forwards,
+        // reverse the left side instead.
+        // See the note about this earlier on this page.
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        // TODO if your initial robot position is not 0,0,0 make sure to fix the
-        // position (look for the function in the documentry). might be setPoseEstimate
+        // Retrieve the IMU from the hardware map
+        imu = hardwareMap.get(IMU.class, "imu");
+        // Adjust the orientation parameters to match your robot
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
+        // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
+        imu.initialize(parameters);
 
-        for (final DcMotor motor : motors) {
-            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public static void operate(Gamepad gamepad1) {
+        double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
+        double x = gamepad1.left_stick_x;
+        double rx = gamepad1.right_stick_x;
+
+        // This button choice was made so that it is hard to hit on accident,
+        // it can be freely changed based on preference.
+        // The equivalent button is start on Xbox-style controllers.
+        if (gamepad1.options) {
+            imu.resetYaw();
         }
 
+        double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+
+        // Rotate the movement direction counter to the bot's rotation
+        double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
+        double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
+
+        rotX = rotX * 1.1;  // Counteract imperfect strafing
+
+        // Denominator is the largest motor power (absolute value) or 1
+        // This ensures all the powers maintain the same ratio,
+        // but only if at least one is out of the range [-1, 1]
+        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
+        double frontLeftPower = (rotY + rotX + rx) / denominator;
+        double backLeftPower = (rotY - rotX + rx) / denominator;
+        double frontRightPower = (rotY - rotX - rx) / denominator;
+        double backRightPower = (rotY + rotX - rx) / denominator;
+
+        frontLeftMotor.setPower(frontLeftPower);
+        backLeftMotor.setPower(backLeftPower);
+        frontRightMotor.setPower(frontRightPower);
+        backRightMotor.setPower(backRightPower);
+
     }
-
-    public static void operate(final Vector velocity_W, float omega) {
-        final float robotAngle = (float) Math.toRadians(Gyro.getAngle());
-        final Vector velocity_RobotCS_W = velocity_W.rotate(-robotAngle);
-        if(velocity_RobotCS_W.norm() <= Math.sqrt(0.005) && Math.abs(omega) == 0) stop();
-        else drive(velocity_RobotCS_W, omega);
-    }
-    // did field centric
-
-
-
-    public static void stop() {
-        for (DcMotor motor : motors) {
-            motor.setPower(0);
-        }
-    }
-
-    public static void drive(Vector drive, double r) {
-        final double lfPower = drive.y + drive.x + r;
-        final double rfPower = drive.y - drive.x - r;
-        final double lbPower = drive.y - drive.x + r;
-        final double rbPower = drive.y + drive.x - r;
-        double highestPower = 1;
-        final double max = Math.max(Math.abs(lfPower),
-                Math.max(Math.abs(lbPower), Math.max(Math.abs(rfPower), Math.abs(rbPower))));
-        if (max > 1)
-            highestPower = max;
-        motors[0].setPower(0.8 * (lfPower / highestPower));
-        motors[1].setPower(0.8 * (rfPower / highestPower));
-        motors[2].setPower(0.8 * (lbPower / highestPower));
-        motors[3].setPower(0.8 * (rbPower / highestPower));
-    }
-
-    public static void testMotors(Gamepad gamepad, Telemetry telemetry){
-        if (gamepad.dpad_down){motors[0].setPower(0.2);}
-        else if (gamepad.dpad_left){motors[1].setPower(0.2);}
-        else if (gamepad.dpad_up){motors[2].setPower(0.2);}
-        else if (gamepad.dpad_right){motors[3].setPower(0.2);}
-        telemetry.addData("lf", motors[0].getCurrentPosition());
-        telemetry.addData("rf", motors[1].getCurrentPosition());
-        telemetry.addData("lb", motors[2].getCurrentPosition());
-        telemetry.addData("rb", motors[3].getCurrentPosition());
-    }
-
-
 }
