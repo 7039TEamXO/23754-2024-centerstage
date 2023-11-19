@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.SubSystems.SubSystemManager;
+import org.firstinspires.ftc.teamcode.SubSystems.elevator.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.intake.Intake;
 import org.firstinspires.ftc.teamcode.drivetrain.Drivetrain;
 
@@ -14,7 +15,8 @@ public class Robot extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Drivetrain.init(hardwareMap);
-        Intake.init(hardwareMap);
+       // Intake.init(hardwareMap);
+       // Elevator.init(hardwareMap);
 
         ElapsedTime robotTime = new ElapsedTime();
         robotTime.reset();
@@ -31,7 +33,8 @@ public class Robot extends LinearOpMode {
         while (!isStopRequested()) {
             Drivetrain.operate(gamepad1);
             telemetry.update();
-            SubSystemManager.operate(gamepad1);
+          //  SubSystemManager.operate(gamepad1);
+
         }
     }
 
