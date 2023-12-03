@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.SubSystems.elevator.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.elevator.ElevatorState;
 import org.firstinspires.ftc.teamcode.SubSystems.intake.Intake;
@@ -17,7 +18,7 @@ public class SubSystemManager {
 
         return gamepad1.b ? RobotState.TRAVEL : gamepad1.a ? RobotState.INTAKE : gamepad1.x ? RobotState.LOW :gamepad1.y ? RobotState.MID : gamepad1.right_bumper ? RobotState.HIGH : lastState;
     }
-    public static void operate (Gamepad gamepad1){
+    public static void operate (Gamepad gamepad1, Telemetry telemetry){
         state = getRobotState(gamepad1);
 
         switch (state){
@@ -42,8 +43,8 @@ public class SubSystemManager {
                 elevatorState = ElevatorState.HIGH;
                 break;
         }
-        Intake.operate(intakeState);
-        Elevator.operate(elevatorState);
+//        Intake.operate(intakeState);
+        Elevator.operate(elevatorState,telemetry);
         lastState = state;
     }
 }

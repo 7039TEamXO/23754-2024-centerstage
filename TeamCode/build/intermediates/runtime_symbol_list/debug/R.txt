@@ -421,6 +421,7 @@ int color dark_orange 0x7f050040
 int color dark_purple 0x7f050041
 int color dark_red 0x7f050042
 int color dark_teal 0x7f050043
+int color dashboardColor 0x7f0500b3
 int color dim_foreground_disabled_material_dark 0x7f050044
 int color dim_foreground_disabled_material_light 0x7f050045
 int color dim_foreground_material_dark 0x7f050046

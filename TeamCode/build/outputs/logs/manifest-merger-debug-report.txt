@@ -7,6 +7,7 @@ INJECTED from C:\Users\XO\Desktop\FtcRobotController\TeamCode\src\main\AndroidMa
 MERGED from [:FtcRobotController] C:\Users\XO\Desktop\FtcRobotController\FtcRobotController\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-80:12
 MERGED from [org.firstinspires.ftc:OnBotJava:9.0.1] C:\Users\XO\.gradle\caches\transforms-3\b48fab3853691df14fc5f98ac0eed0e4\transformed\jetified-OnBotJava-9.0.1\AndroidManifest.xml:34:1-43:12
 MERGED from [org.firstinspires.ftc:Blocks:9.0.1] C:\Users\XO\.gradle\caches\transforms-3\64e47fef94886260e7e2314e92e160c6\transformed\jetified-Blocks-9.0.1\AndroidManifest.xml:2:1-26:12
+MERGED from [com.acmerobotics.dashboard:dashboard:0.4.12] C:\Users\XO\.gradle\caches\transforms-3\63dbb44caa0553503bd8bb1f317f8c62\transformed\jetified-dashboard-0.4.12\AndroidManifest.xml:2:1-9:12
 MERGED from [org.firstinspires.ftc:FtcCommon:9.0.1] C:\Users\XO\.gradle\caches\transforms-3\c356b40a3595f2adb3d546d333fdf4de\transformed\jetified-FtcCommon-9.0.1\AndroidManifest.xml:3:1-174:12
 MERGED from [org.firstinspires.ftc:Inspection:9.0.1] C:\Users\XO\.gradle\caches\transforms-3\fea5e8120cbdff1aea9d51b6fa87e0e7\transformed\jetified-Inspection-9.0.1\AndroidManifest.xml:2:1-32:12
 MERGED from [org.firstinspires.ftc:RobotServer:9.0.1] C:\Users\XO\.gradle\caches\transforms-3\35aa6ecf48072086de41a8e521f446b8\transformed\jetified-RobotServer-9.0.1\AndroidManifest.xml:2:1-11:12
@@ -117,6 +118,8 @@ MERGED from [org.firstinspires.ftc:OnBotJava:9.0.1] C:\Users\XO\.gradle\caches\t
 MERGED from [org.firstinspires.ftc:OnBotJava:9.0.1] C:\Users\XO\.gradle\caches\transforms-3\b48fab3853691df14fc5f98ac0eed0e4\transformed\jetified-OnBotJava-9.0.1\AndroidManifest.xml:39:5-41:41
 MERGED from [org.firstinspires.ftc:Blocks:9.0.1] C:\Users\XO\.gradle\caches\transforms-3\64e47fef94886260e7e2314e92e160c6\transformed\jetified-Blocks-9.0.1\AndroidManifest.xml:7:5-9:41
 MERGED from [org.firstinspires.ftc:Blocks:9.0.1] C:\Users\XO\.gradle\caches\transforms-3\64e47fef94886260e7e2314e92e160c6\transformed\jetified-Blocks-9.0.1\AndroidManifest.xml:7:5-9:41
+MERGED from [com.acmerobotics.dashboard:dashboard:0.4.12] C:\Users\XO\.gradle\caches\transforms-3\63dbb44caa0553503bd8bb1f317f8c62\transformed\jetified-dashboard-0.4.12\AndroidManifest.xml:5:5-7:41
+MERGED from [com.acmerobotics.dashboard:dashboard:0.4.12] C:\Users\XO\.gradle\caches\transforms-3\63dbb44caa0553503bd8bb1f317f8c62\transformed\jetified-dashboard-0.4.12\AndroidManifest.xml:5:5-7:41
 MERGED from [org.firstinspires.ftc:FtcCommon:9.0.1] C:\Users\XO\.gradle\caches\transforms-3\c356b40a3595f2adb3d546d333fdf4de\transformed\jetified-FtcCommon-9.0.1\AndroidManifest.xml:8:5-10:41
 MERGED from [org.firstinspires.ftc:FtcCommon:9.0.1] C:\Users\XO\.gradle\caches\transforms-3\c356b40a3595f2adb3d546d333fdf4de\transformed\jetified-FtcCommon-9.0.1\AndroidManifest.xml:8:5-10:41
 MERGED from [org.firstinspires.ftc:Inspection:9.0.1] C:\Users\XO\.gradle\caches\transforms-3\fea5e8120cbdff1aea9d51b6fa87e0e7\transformed\jetified-Inspection-9.0.1\AndroidManifest.xml:7:5-9:41
