@@ -16,7 +16,7 @@ public class Robot extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Drivetrain.init(hardwareMap);
-       // Intake.init(hardwareMap);
+        Intake.init(hardwareMap);
         Elevator.init(hardwareMap);
 
         ElapsedTime robotTime = new ElapsedTime();
