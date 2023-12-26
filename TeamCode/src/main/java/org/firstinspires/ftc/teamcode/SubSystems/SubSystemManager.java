@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.intake.IntakeState;
 
 public class SubSystemManager {
 
-    private static RobotState state = RobotState.TRAVEL;
+    public static RobotState state = RobotState.TRAVEL;
     private static RobotState lastState = RobotState.TRAVEL;
     private  static ElevatorState elevatorState = ElevatorState.GROUND;
     private static IntakeState intakeState = IntakeState.CLOSE;

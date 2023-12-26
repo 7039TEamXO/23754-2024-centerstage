@@ -13,6 +13,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.teamcode.SubSystems.RobotState;
+import org.firstinspires.ftc.teamcode.SubSystems.SubSystemManager;
 import org.firstinspires.ftc.teamcode.util.Vector;
 
 
@@ -47,8 +49,12 @@ public class Drivetrain {
     }
 
     public static void operate(Gamepad gamepad1) {
-        double y = gamepad1.left_stick_y; // Remember, Y stick value is reversed
-        double x = -gamepad1.left_stick_x;
+        double y = gamepad1.left_stick_y * (SubSystemManager.state.equals(RobotState.LOW) ||
+                SubSystemManager.state.equals(RobotState.MID) ||
+                SubSystemManager.state.equals(RobotState.HIGH) ? 0.4 : 1); // Remember, Y stick value is reversed
+        double x = -gamepad1.left_stick_x * (SubSystemManager.state.equals(RobotState.LOW) ||
+                SubSystemManager.state.equals(RobotState.MID) ||
+                SubSystemManager.state.equals(RobotState.HIGH) ? 0.4 : 1);
         double rx = -gamepad1.right_stick_x;
 
         // This button choice was made so that it is hard to hit on accident,
