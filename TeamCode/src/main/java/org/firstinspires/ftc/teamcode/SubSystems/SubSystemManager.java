@@ -46,8 +46,8 @@ public class SubSystemManager {
                 elevatorState = ElevatorState.CLIMB;
         }
         Intake.operate(intakeState, gamepad1, telemetry);
-        Elevator.operate(elevatorState,telemetry, gamepad1);
-        lastState = state;
+//        Elevator.operate(elevatorState,telemetry, gamepad1);
+        lastState =  state;
         telemetry.addData("claw state", intakeState);
     }
 }
